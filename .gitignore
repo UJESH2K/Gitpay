@@ -1,20 +1,15 @@
+# Node
 node_modules/
-.env
-.env.local
-.DS_Store
-*.log
 dist/
-build/
 .next/
-.venv/
-venv/
-__pycache__/
-*.pyc
-data/
-*.db
-.cache/
-.idea/
-.vscode/
-*.swp
-*.swo
-~*
+
+# Solana / Anchor
+target/
+.anchor/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
