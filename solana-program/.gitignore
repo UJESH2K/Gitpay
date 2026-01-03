@@ -1,0 +1,15 @@
+# Node
+node_modules/
+dist/
+.next/
+
+# Solana / Anchor
+target/
+.anchor/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
