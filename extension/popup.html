@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Pay - Wallet Connect</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 400px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 0;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      color: white;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      opacity: 0.9;
+      font-size: 13px;
+    }
+
+    .section {
+      margin-bottom: 24px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 16px;
+      border-radius: 8px;
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      font-weight: 600;
+      margin-bottom: 12px;
+      font-size: 13px;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: rgba(255, 255, 255, 0.3);
+      border-color: rgba(255, 255, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .wallet-info {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 12px;
+      border-radius: 6px;
+      word-break: break-all;
+      font-size: 12px;
+      font-family: "Monaco", "Menlo", monospace;
+      margin-top: 8px;
+    }
+
+    .status {
+      font-size: 12px;
+      opacity: 0.9;
+      margin-top: 8px;
+    }
+
+    .status.connected {
+      color: #4ade80;
+    }
+
+    .status.disconnected {
+      color: #fbbf24;
+    }
+
+    .btn-disconnect {
+      background: rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      font-size: 12px;
+      padding: 8px;
+      margin-top: 8px;
+    }
+
+    .btn-disconnect:hover {
+      background: rgba(239, 68, 68, 0.4);
+    }
+
+    .info-box {
+      background: rgba(0, 0, 0, 0.1);
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      line-height: 1.5;
+      opacity: 0.95;
+    }
+
+    .success {
+      color: #4ade80;
+      font-weight: 600;
+    }
+
+    .error {
+      color: #fca5a5;
+      font-weight: 600;
+    }
+
+    .footer {
+      font-size: 11px;
+      text-align: center;
+      opacity: 0.7;
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>💰 GitHub Pay</h1>
+      <p>Reward contributors with Solana</p>
+    </div>
+
+    <!-- Wallet Connection Section -->
+    <div class="section">
+      <div class="section-title">Solana Wallet</div>
+      
+      <div id="walletStatus">
+        <p class="status disconnected">⚠ Wallet not connected</p>
+        <button id="connectBtn" class="btn-primary">Connect Phantom Wallet</button>
+      </div>
+
+      <div id="walletConnected" style="display: none;">
+        <p class="status connected">✅ Connected</p>
+        <div class="wallet-info">
+          <div style="opacity: 0.7; margin-bottom: 4px;">Wallet Address:</div>
+          <div id="walletAddress"></div>
+        </div>
+        <button id="disconnectBtn" class="btn-disconnect">Disconnect</button>
+      </div>
+    </div>
+
+    <!-- GitHub Account Section -->
+    <div class="section">
+      <div class="section-title">GitHub Account</div>
+      
+      <div id="githubStatus">
+        <p class="status disconnected">⚠ Not linked</p>
+        <button id="linkGithubBtn" class="btn-primary">Link GitHub Account</button>
+      </div>
+
+      <div id="githubLinked" style="display: none;">
+        <p class="status connected">✅ Linked</p>
+        <div class="wallet-info">
+          <div style="opacity: 0.7; margin-bottom: 4px;">Username:</div>
+          <div id="githubUsername"></div>
+        </div>
+        <button id="unlinkGithubBtn" class="btn-disconnect">Unlink</button>
+      </div>
+    </div>
+
+    <!-- Info Section -->
+    <div class="section">
+      <div class="info-box">
+        <strong>How it works:</strong><br>
+        1. Connect your Solana wallet<br>
+        2. Link your GitHub account<br>
+        3. Receive rewards from maintainers<br>
+        4. Redeem directly in PRs
+      </div>
+    </div>
+
+    <div class="footer">
+      v0.1.0 | Solana Hackathon 2026
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

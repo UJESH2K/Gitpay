@@ -1,0 +1,28 @@
+{
+  "name": "github-pay",
+  "version": "0.1.0",
+  "description": "Reward GitHub contributors with Solana payments via Chrome extension",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "test": "cd backend && npm test",
+    "setup": "bash setup.sh"
+  },
+  "keywords": [
+    "github",
+    "solana",
+    "rewards",
+    "chrome-extension",
+    "hackathon"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}
